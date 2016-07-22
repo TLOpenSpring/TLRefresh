@@ -1,0 +1,20 @@
+PODS:
+  - Nimble (3.2.0)
+  - Quick (0.9.2)
+  - TLRefresh (0.1.0)
+
+DEPENDENCIES:
+  - Nimble (~> 3.0)
+  - Quick (~> 0.8)
+  - TLRefresh (from `../`)
+
+EXTERNAL SOURCES:
+  TLRefresh:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
+  Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226
+  TLRefresh: 048459d59074e83c4dede0a00a7c6c09e8ee017d
+
+COCOAPODS: 0.39.0

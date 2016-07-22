@@ -1,4 +1,5 @@
 # TLRefresh
+<<<<<<< HEAD
 
 [![CI Status](http://img.shields.io/travis/Andrew/TLRefresh.svg?style=flat)](https://travis-ci.org/Andrew/TLRefresh)
 [![Version](https://img.shields.io/cocoapods/v/TLRefresh.svg?style=flat)](http://cocoapods.org/pods/TLRefresh)
@@ -27,3 +28,6 @@ Andrew, anluanlu123@163.com
 ## License
 
 TLRefresh is available under the MIT license. See the LICENSE file for more info.
+=======
+针对UItableview和UICollectionView的上拉加载，下拉刷新的类库
+>>>>>>> 1570ae02925cb515e4fe3fdb99df01d7412200a2

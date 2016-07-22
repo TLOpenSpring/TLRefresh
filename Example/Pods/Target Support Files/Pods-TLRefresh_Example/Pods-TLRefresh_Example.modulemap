@@ -1,0 +1,6 @@
+framework module Pods_TLRefresh_Example {
+  umbrella header "Pods-TLRefresh_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
