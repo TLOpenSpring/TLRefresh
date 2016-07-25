@@ -18,6 +18,11 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "TLRefresh/Classes/**/*",
-  "resources": "TLRefresh/TLRefresh.bundle"
+  "source_files": "TLRefresh/**/*",
+  "resources": "TLRefresh/TLRefresh.bundle",
+  "resource_bundles": {
+    "TLRefresh": [
+      "TLRefresh/Assets/*.png"
+    ]
+  }
 }

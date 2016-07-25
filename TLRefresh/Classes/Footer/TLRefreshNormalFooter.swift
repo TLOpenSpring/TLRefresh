@@ -18,18 +18,15 @@ public class TLRefreshNormalFooter: TLRefreshBackStateFooter {
         
         self.backgroundColor = UIColor.blueColor()
         
-        let bundlePath = NSBundle.mainBundle().pathForResource("TLRefresh", ofType: "bundle")
-        
-        let Path = NSBundle.mainBundle().pathForResource("TLRefresh/Classes/TLRefresh", ofType: "bundle")
-        
-        let image = NSBundle.mainBundle().pathForResource("arrow", ofType: "png")
-        let image1 = NSBundle.mainBundle().pathForResource("arrow@2x", ofType: "png")
+        let imgBundle = NSBundle(forClass: TLRefreshNormalFooter.self)
         
         
-        let img = UIImage(named: "arrow")
-        arrowIv = UIImageView(image: img)
-        arrowIv.image = img
-        self.arrowIv.backgroundColor = UIColor.grayColor()
+        let myUrl = imgBundle.URLForResource("test", withExtension: "bundle")
+        let myBundle = NSBundle(URL: myUrl!)
+        let infoImg = UIImage(contentsOfFile: (myBundle!.pathForResource("arrow", ofType: "png"))!)
+        
+        
+        arrowIv = UIImageView(image: infoImg)
         self.addSubview(arrowIv)
         
         
@@ -55,11 +52,7 @@ public class TLRefreshNormalFooter: TLRefreshBackStateFooter {
         let arrowCenter = CGPointMake(arrowCenterX, arrowCenterY)
         
         //箭头
-        if(self.arrowIv.image == nil){
-          self.arrowIv.size  = CGSizeMake(30, 80)
-        }else{
-            self.arrowIv.size = (self.arrowIv.image?.size)!
-        }
+        self.arrowIv.size = (self.arrowIv.image?.size)!
         self.arrowIv.center = arrowCenter
         //转子
         self.activityIndicatorView.center = arrowCenter
@@ -83,7 +76,7 @@ public class TLRefreshNormalFooter: TLRefreshBackStateFooter {
         
         if refreshState == TLRefreshState.Idle
         {
-            self.arrowIv.hidden = true
+            self.arrowIv.hidden = false
             self.activityIndicatorView.stopAnimating()
         }else if(refreshState == TLRefreshState.Pulling){
             self.arrowIv.hidden = false
