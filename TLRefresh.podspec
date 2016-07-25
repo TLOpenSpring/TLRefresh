@@ -30,11 +30,12 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'TLRefresh/Classes/**/*'
+  s.source_files = 'TLRefresh/**/*'
+  s.resource = 'TLRefresh/TLRefresh.bundle'
   
-   s.resource_bundles = {
-     'TLRefresh' => ['TLRefresh/Assets/*.png']
-   }
+# s.resource_bundles = {
+#   'TLRefresh' => ['TLRefresh/Assets/*.png']
+#}
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
