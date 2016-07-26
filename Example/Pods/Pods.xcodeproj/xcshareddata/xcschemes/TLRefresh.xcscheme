@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1C75F390B2BE297BB3280081'
+               BlueprintIdentifier = '98228CCA27C501B2B0EFFE9E'
                BlueprintName = 'TLRefresh'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'TLRefresh.framework'>

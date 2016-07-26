@@ -21,12 +21,53 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "刷新控件"
-        arrayData = ["普通刷新","自定义刷新","gif动画刷新"]
+        arrayData = ["普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新",
+                     "普通刷新",
+                     "自定义刷新",
+                     "gif动画刷新"]
         initView()
     }
     
     func initView() -> Void {
-        let rect = CGRectMake(0, 0, screen_width, screen_height-64)
+        let rect = CGRectMake(0, 0, screen_width, screen_height)
         tableview = UITableView(frame: rect)
         tableview.delegate=self
         tableview.dataSource=self
@@ -36,10 +77,15 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             
             print("执行了刷新代码")
             
+            
             Refresh.performBlock(3, completionHander: {
                 self.tableview.tl_footer?.endRefreshing()
             })
         })
+//        // 设置了底部inset
+//        self.tableview.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
+//        // 忽略掉底部inset
+//        self.tableview.tl_footer?.ignoredScrollViewContentInsetBottom = 30
         
     }
 

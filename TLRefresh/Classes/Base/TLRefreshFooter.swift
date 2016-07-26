@@ -10,8 +10,10 @@ import UIKit
 
 public class TLRefreshFooter: TLBaseRefresh {
     
-    
     var isAutoHidden:Bool = false
+    
+    /// 忽略多少scrollView的contentInset的bottom
+    public var ignoredScrollViewContentInsetBottom:CGFloat = 0
 
     //MARK: - 构造方法
    public init(block: TLRefreshingHandler?) {
@@ -48,6 +50,11 @@ public class TLRefreshFooter: TLBaseRefresh {
 //                        self.hidden = totalCount == 0
 //                    }
 //                }
+                if self.scrollView.tl_totalCount == 0{
+                  self.hidden = true
+                }else{
+                  self.hidden = false
+                }
             }
         }
     }

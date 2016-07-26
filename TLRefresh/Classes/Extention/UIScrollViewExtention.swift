@@ -60,14 +60,15 @@ extension UIScrollView{
          return objc_getAssociatedObject(self, &TLRefereshFooterKey) as? TLRefreshFooter
         }
         set{
-//            self.tl_footer = newValue
-//            if(tl_footer == nil){
-//                return
-//            }
+            var temp = newValue
+        
+            if(temp == nil){
+                return
+            }
             
             self.insertSubview(newValue!, atIndex: 0)
             self.willChangeValueForKey("tl_footer")
-            objc_setAssociatedObject(self, &TLRefereshFooterKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &TLRefereshFooterKey, temp, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             self.didChangeValueForKey("tl_footer")
         }
     }
@@ -77,15 +78,14 @@ extension UIScrollView{
     
     //MARK: -  tl_reloadDataBlock
     
-   public var tl_reloadDataBlock:((Int)->())?{
-        get{
-          return objc_getAssociatedObject(self, &TLreloadDataBlockKey) as? (Int)->()
+
+    public var tl_reloadDataBlock:((Int)->())?{
+        
+        var temp = tl_reloadDataBlock
+        if(temp != nil){
+            temp!(tl_totalCount)
         }
-        set{
-            self.willChangeValueForKey("tl_reloadDataBlock");
-            objc_setAssociatedObject(self, &TLreloadDataBlockKey, newValue as! AnyObject, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            self.didChangeValueForKey("tl_reloadDataBlock")
-        }
+       return temp
     }
     
     func executeReloaDataBlock() -> Void {

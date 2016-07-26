@@ -13,14 +13,13 @@ public class TLRefreshBackFooter: TLRefreshFooter {
     var lastRefreshCount:Int = 0
     var lastBottomData:CGFloat = 0
     
-    /// 忽略多少scrollView的contentInset的bottom
-    var ignoredScrollViewContentInsetBottom:CGFloat = 0
+  
     
     
     override public func willMoveToSuperview(newSuperview: UIView?) {
         super.willMoveToSuperview(newSuperview)
         
-        self.scrollViewContentOffsetDidChange([:])
+       // self.scrollViewContentOffsetDidChange([:])
     }
     
     //MARK: - 父类方法
@@ -85,11 +84,24 @@ public class TLRefreshBackFooter: TLRefreshFooter {
         super.setState(refreshState)
         
         if state == TLRefreshState.NoMoreData || state == TLRefreshState.Idle{
+            
+            //如果是从刚刷新的状态变为闲置状态
+            if oldState  == TLRefreshState.Refreshing{
+             UIView.animateWithDuration(TLRefreshSlowAnimationDuration, animations: {
+                
+                self.scrollView.tl_insetBottom -= self.lastBottomData
+                }, completion: { (finished) in
+                    if let handler = self.refreshEndHandler{
+                        handler!()
+                    }
+             })
+            }
          
             //获取ScrollView的内容超出View的高度
             let beyondHeight = self.heightForContentBreakView()
             
             if oldState == TLRefreshState.Refreshing && beyondHeight>0 && scrollView?.tl_totalCount != lastRefreshCount{
+                self.scrollView.tl_offsetY = self.scrollView.tl_offsetY
             }
         }else if state == TLRefreshState.Refreshing{//正在刷新
          //记录刷新前的数量

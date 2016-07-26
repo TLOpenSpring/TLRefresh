@@ -29,8 +29,6 @@
 		415F29FE4E9D970954C46CD3CF4AE345 /* SatisfyAnyOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8C873CB5F43A0FA130C9B9FF74B6B0 /* SatisfyAnyOf.swift */; };
 		427740F0BE2494061AF5BA88DE1193AC /* QuickConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = E2353FC0C41320250E7132DE6734F885 /* QuickConfiguration.m */; };
 		486B74C8EFEB68AD25CE128F3051E432 /* ObjCExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A129290F935182407C183EB04C0C2C90 /* ObjCExpectation.swift */; };
-		497AEE5D1D4621E6001FADA6 /* test.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 497AEE5C1D4621E6001FADA6 /* test.bundle */; };
-		497AEE5E1D4621E6001FADA6 /* test.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 497AEE5C1D4621E6001FADA6 /* test.bundle */; };
 		4AF6C26A30D865059C24DC5317786B76 /* BeNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2748FABD1661E3A75F8B07E115CF96 /* BeNil.swift */; };
 		4E5A721963877AA3A6AA3D80DAA4E5E9 /* AssertionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDAA753452F6B96DE24D2CF7D396628 /* AssertionRecorder.swift */; };
 		5104AE2989305145BF446E633B567924 /* EndWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5DB72110FF4FE8D16C90A617EFD92 /* EndWith.swift */; };
@@ -194,7 +192,7 @@
 		411F9D4220CE8ECF3908FBA04DA3D648 /* Pods-TLRefresh_Example-TLRefresh_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-TLRefresh_Example-TLRefresh_Tests-umbrella.h"; sourceTree = "<group>"; };
 		414114D9FD8600FA208D6152470C2DF0 /* DSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DSL.swift; path = Sources/Quick/DSL/DSL.swift; sourceTree = "<group>"; };
 		45D3661DD977D936FA0FEA7FDE08D852 /* Equal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Equal.swift; path = Sources/Nimble/Matchers/Equal.swift; sourceTree = "<group>"; };
-		497AEE5C1D4621E6001FADA6 /* test.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = test.bundle; sourceTree = "<group>"; };
+		497359CE1D478FA500536F2D /* test.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = test.bundle; sourceTree = "<group>"; };
 		4EBC862576E582DF711B25DC28CFCDBE /* QuickTestSuite.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickTestSuite.swift; path = Sources/Quick/QuickTestSuite.swift; sourceTree = "<group>"; };
 		500F43F0D1DAD11B255B9FA8B5362A5C /* TLRefresh.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TLRefresh.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		51465DCF8ECE9AE4DD3DECD5656849CE /* Expectation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Expectation.swift; path = Sources/Nimble/Expectation.swift; sourceTree = "<group>"; };
@@ -631,9 +629,9 @@
 		E5B2B9F1A63F11D8B7A8D0ADE9082D3A /* TLRefresh */ = {
 			isa = PBXGroup;
 			children = (
+				497359CE1D478FA500536F2D /* test.bundle */,
 				CB0AF6A1DC862C2E5748C6868C868717 /* Support Files */,
 				F7893201A2007E122B200CD9E4116203 /* TLRefresh */,
-				497AEE5C1D4621E6001FADA6 /* test.bundle */,
 			);
 			name = TLRefresh;
 			path = ../..;
@@ -857,7 +855,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD66CD2C53656FDB44AA9954DD8097D1 /* TLRefresh.bundle in Resources */,
-				497AEE5D1D4621E6001FADA6 /* test.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -865,7 +862,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				497AEE5E1D4621E6001FADA6 /* test.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -210,7 +210,7 @@ public class TLBaseRefresh: UIView {
         }
         if keyPath == TLRefreshKeyPathContentOffset{
             self.scrollViewContentOffsetDidChange(change!)
-        }else if(keyPath == TLRefreshKeyPathContentSize){
+        }else if(keyPath == TLRefreshKeyPathPanState){
             self.scrollViewPanStateDidChange(change!)
         }
         
