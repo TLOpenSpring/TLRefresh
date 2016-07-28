@@ -43,26 +43,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                      "自定义刷新",
                      "gif动画刷新",
                      "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新"]
+                     "自定义刷新"
+                   ]
         initView()
     }
     
@@ -82,10 +64,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 self.tableview.tl_footer?.endRefreshing()
             })
         })
-//        // 设置了底部inset
-//        self.tableview.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
-//        // 忽略掉底部inset
-//        self.tableview.tl_footer?.ignoredScrollViewContentInsetBottom = 30
+        
+
+      self.tableview.tl_footer?.setStateLbColor(color: UIColor.orangeColor())
+        
         
     }
 

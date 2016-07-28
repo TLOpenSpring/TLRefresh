@@ -59,7 +59,34 @@ public class TLBaseRefresh: UIView {
     /// 回调对象
     var refreshTarget:AnyObject?
     
+    //MARK: - 自定义属性
+    /// 拖拽的百分比
+    var pullingPercent:CGFloat = 0 {
+        didSet{
+            if(isRefreshing() == true){
+             return
+            }
+            if isAutoChangeAlpha == true{
+                self.alpha = pullingPercent
+            }
+        }
+    }
+    /// 根据拖拽的百分比自动切换透明度
+    var isAutoChangeAlpha:Bool = false{
+        didSet{
+            if(isRefreshing() == true){
+                return
+            }
+            if(isAutoChangeAlpha == true){
+                self.alpha = self.pullingPercent
+            }else{
+                self.alpha = 1
+            }
+        }
+    }
     
+    
+    //MARK: - 构造方法
    public override init(frame: CGRect) {
         super.init(frame: frame)
         initialization()
@@ -73,8 +100,9 @@ public class TLBaseRefresh: UIView {
      系统初始化的方法
      */
     func initialization() -> Void {
-        
+        self.backgroundColor = UIColor.clearColor()
     }
+    
 
     
     
@@ -84,12 +112,14 @@ public class TLBaseRefresh: UIView {
         UIView.animateWithDuration(TLRefreshSlowAnimationDuration) { 
             self.alpha = 1
         }
+    
+    self.pullingPercent = 1
         
         if (self.window != nil){
             setState(.Refreshing)
         }else{
             if self.state != TLRefreshState.Refreshing{
-                setState(.Refreshing)
+                setState(.WillRefresh)
                 //重新刷新
                 self.setNeedsDisplay()
             }
@@ -248,6 +278,13 @@ public class TLBaseRefresh: UIView {
         }
         
       
+    }
+    
+    public override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+        if state == TLRefreshState.WillRefresh{
+           state = TLRefreshState.Refreshing
+        }
     }
     
     

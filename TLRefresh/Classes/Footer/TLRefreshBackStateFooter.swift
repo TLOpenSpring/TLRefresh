@@ -12,7 +12,7 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
 
     /// 文字距离圈圈、箭头的距离
     var labelLeftInset:CGFloat = 10
-    
+  
     var stateTitles:[TLRefreshState:String] = [TLRefreshState:String]()
     
     /// 显示刷新状态的lb
@@ -23,11 +23,11 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
         
         stateLb = UILabel()
         stateLb.frame = CGRectMake(0, 0, tl_screen_width, 20)
-        stateLb.font = UIFont.systemFontOfSize(16);
-        stateLb.textColor = UIColor.redColor()
+        stateLb.textColor = self.tintColor
         stateLb.autoresizingMask = .FlexibleWidth;
-        stateLb.textAlignment = .Center;
-        stateLb.backgroundColor = UIColor.whiteColor()
+        stateLb.textAlignment = .Left;
+        stateLb.backgroundColor = UIColor.clearColor()
+        stateLb.font = UIFont.boldSystemFontOfSize(16)
         self.addSubview(stateLb)
         
         //初始化文字
@@ -38,8 +38,8 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
         
        
     }
-    
   
+    
 
     
     public override func layoutSubviews() {
@@ -74,8 +74,21 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
     
     
     override func setState(refreshState: TLRefreshState) {
+        let oldState = self.state;
+        if (state == refreshState){
+            return;
+        }
         super.setState(refreshState)
         self.stateLb.text = titleForState(refreshState)
+    }
+    
+    /**
+     设置状态文字的颜色
+     
+     - parameter color:
+     */
+    public override func setStateLbColor(color color:UIColor) -> Void {
+        stateLb.textColor = color
     }
     
 }

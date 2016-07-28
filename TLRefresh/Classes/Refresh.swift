@@ -45,6 +45,9 @@ public class Refresh: NSObject {
                                     Int64(delay * Double(NSEC_PER_SEC))) // 1
         dispatch_after(popTime, dispatch_get_main_queue(), completionHander);
     }
+    
+    
+   
 
 }
 
