@@ -24,5 +24,10 @@
     "TLRefresh": [
       "TLRefresh/Assets/*.png"
     ]
+  },
+  "dependencies": {
+    "Willow": [
+      "~> 1.1.0"
+    ]
   }
 }

@@ -9,6 +9,7 @@
 import UIKit
 import TLRefresh
 
+
 let screen_width = UIScreen.mainScreen().bounds.width
 let screen_height = UIScreen.mainScreen().bounds.height
 
@@ -29,20 +30,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                      "gif动画刷新",
                      "普通刷新",
                      "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
-                     "自定义刷新",
-                     "gif动画刷新",
-                     "普通刷新",
                      "自定义刷新"
                    ]
         initView()
@@ -57,24 +44,25 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         tableview.tl_footer = TLRefreshNormalFooter(block: {
             
-            print("执行了刷新代码")
-            
-            
             Refresh.performBlock(3, completionHander: {
                 self.tableview.tl_footer?.endRefreshing()
             })
         })
-        
 
-      self.tableview.tl_footer?.setStateLbColor(color: UIColor.orangeColor())
+//      self.tableview.tl_footer?.setStateLbColor(color: UIColor.redColor())
         
+        self.tableview.tl_header = TLRefreshNormalHeader(block: {
+            Refresh.performBlock(3, completionHander: {
+                self.tableview.tl_header?.endRefreshing()
+            })
+        })
         
     }
 
     
     //MARK: - UItableivew delegate
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -91,6 +79,22 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
         cell?.textLabel?.text = arrayData[indexPath.row]
         return cell!
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let rect = CGRectMake(0, 0, screen_width, 50)
+        let view = RefreshHeader(frame: rect)
+        view.titlelb.text = "Section\(section)"
+        view.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        return view
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
     }
 
 }

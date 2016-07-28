@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 public class TLRefreshBackFooter: TLRefreshFooter {
 
     var lastRefreshCount:Int = 0
@@ -71,7 +73,9 @@ public class TLRefreshBackFooter: TLRefreshFooter {
             //普通和即将刷新的临界点
             let normalPullingOffsetY = happenOffsety + self.height
             
-            print("==self.state:\(self.state!);currentOffsetY:\(currentOffsetY);normalPullingOffsetY:\(normalPullingOffsetY)")
+            
+            
+            TLLogUtils.log?.debug("==self.state:\(self.state!);currentOffsetY:\(currentOffsetY);normalPullingOffsetY:\(normalPullingOffsetY)")
             
             if state == TLRefreshState.Idle && currentOffsetY > normalPullingOffsetY{
                 

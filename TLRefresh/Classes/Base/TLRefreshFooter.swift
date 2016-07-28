@@ -9,19 +9,8 @@
 import UIKit
 
 
-@objc protocol TLRefreshFootProtocol {
-    /**
-     设置状态文字的显示颜色
-     
-     - parameter color: 要设置的颜色
-     
-     - returns:
-     */
-   optional func setStateLbColor(color color:UIColor) -> Void;
-}
 
-
-public class TLRefreshFooter: TLBaseRefresh,TLRefreshFootProtocol {
+public class TLRefreshFooter: TLBaseRefresh {
     
     var isAutoHidden:Bool = false
     
@@ -87,12 +76,7 @@ public class TLRefreshFooter: TLBaseRefresh,TLRefreshFootProtocol {
         self.state = TLRefreshState.Idle
     }
     
-    /**
-     设置状态文字的颜色
-     
-     - parameter color: 颜色
-     */
-   public func setStateLbColor(color color:UIColor) -> Void{}
+
   
 }
 

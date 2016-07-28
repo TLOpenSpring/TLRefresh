@@ -44,13 +44,15 @@ extension UIScrollView{
             return (objc_getAssociatedObject(self, &TLRefereshHeadKey) as? TLRefreshHeader)
         }
         set{
-            self.tl_header = newValue
-            if(tl_header  == nil){
-              return
+            var temp = newValue
+            
+            if(temp == nil){
+                return
             }
-            self.insertSubview(tl_header!, atIndex: 0)
+            
+            self.insertSubview(temp!, atIndex: 0)
             self.willChangeValueForKey("tl_header") //KVO
-            objc_setAssociatedObject(self, &TLRefereshHeadKey, tl_header, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &TLRefereshHeadKey, temp, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             self.didChangeValueForKey("tl_header")
         }
     }

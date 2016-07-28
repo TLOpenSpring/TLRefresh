@@ -21,13 +21,7 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
     override func initialization() {
         super.initialization()
         
-        stateLb = UILabel()
-        stateLb.frame = CGRectMake(0, 0, tl_screen_width, 20)
-        stateLb.textColor = self.tintColor
-        stateLb.autoresizingMask = .FlexibleWidth;
-        stateLb.textAlignment = .Left;
-        stateLb.backgroundColor = UIColor.clearColor()
-        stateLb.font = UIFont.boldSystemFontOfSize(16)
+        stateLb = TLControlUtils.createStateLabel()
         self.addSubview(stateLb)
         
         //初始化文字
@@ -45,6 +39,11 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
     public override func layoutSubviews() {
         super.layoutSubviews()
         self.labelLeftInset = TLRefreshLabelLeftInset
+        
+        let originX:CGFloat = self.width/2 - kStateLbWidth/2
+        let originY:CGFloat = self.height/2 - 20/2
+        
+        self.stateLb.frame = CGRectMake(originX, originY, kStateLbWidth, 20)
     }
     
     /**

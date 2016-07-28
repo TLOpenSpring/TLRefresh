@@ -39,6 +39,10 @@ let TLRefreshHeaderLastTimeText = "最后更新：";
 let TLRefreshHeaderDateTodayText = "今天";
 let TLRefreshHeaderNoneLastDateText = "无记录";
 
+
+//MARK: - 定义一些控件的尺寸
+let kStateLbWidth:CGFloat = 180
+
 public class Refresh: NSObject {
   public static func performBlock(delay:NSTimeInterval,completionHander:()->()) -> Void {
         let popTime = dispatch_time(DISPATCH_TIME_NOW,

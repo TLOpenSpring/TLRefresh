@@ -85,11 +85,13 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-TLRefresh_Example-TLRefresh_Tests/TLRefresh.framework"
+  install_framework "Pods-TLRefresh_Example-TLRefresh_Tests/Willow.framework"
   install_framework "Pods-TLRefresh_Example-TLRefresh_Tests/Nimble.framework"
   install_framework "Pods-TLRefresh_Example-TLRefresh_Tests/Quick.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-TLRefresh_Example-TLRefresh_Tests/TLRefresh.framework"
+  install_framework "Pods-TLRefresh_Example-TLRefresh_Tests/Willow.framework"
   install_framework "Pods-TLRefresh_Example-TLRefresh_Tests/Nimble.framework"
   install_framework "Pods-TLRefresh_Example-TLRefresh_Tests/Quick.framework"
 fi

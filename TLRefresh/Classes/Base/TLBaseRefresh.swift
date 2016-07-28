@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Willow
 
 /**
  刷新的几种状态
@@ -72,7 +73,7 @@ public class TLBaseRefresh: UIView {
         }
     }
     /// 根据拖拽的百分比自动切换透明度
-    var isAutoChangeAlpha:Bool = false{
+    var isAutoChangeAlpha:Bool = true{
         didSet{
             if(isRefreshing() == true){
                 return
@@ -101,6 +102,15 @@ public class TLBaseRefresh: UIView {
      */
     func initialization() -> Void {
         self.backgroundColor = UIColor.clearColor()
+        
+        
+        TLLogUtils.log?.debug("Debug Message")
+        // Option 1
+        TLLogUtils.log?.debug("Debug Message")    // Debug Message
+        TLLogUtils.log?.info("Info Message")      // Info Message
+        TLLogUtils.log?.event("Event Message")    // Event Message
+        TLLogUtils.log?.warn("Warn Message")      // Warn Message
+        TLLogUtils.log?.error("Error Message")    // Error Message
     }
     
 
@@ -137,7 +147,10 @@ public class TLBaseRefresh: UIView {
      */
    public func endRefreshing() -> Void
     {
-        setState(.Idle)
+        weak var weakSelf = self
+        dispatch_async(dispatch_get_main_queue()) {
+            weakSelf!.setState(.Idle)
+        }
     }
     func endRereshing(completionHandler:(()->())?) -> Void {
         self.refreshEndHandler = completionHandler
@@ -286,6 +299,13 @@ public class TLBaseRefresh: UIView {
            state = TLRefreshState.Refreshing
         }
     }
+    
+    /**
+     设置状态文字的颜色
+     
+     - parameter color: 颜色
+     */
+    public func setStateLbColor(color color:UIColor) -> Void{}
     
     
 }
