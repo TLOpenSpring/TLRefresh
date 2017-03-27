@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class TLRefreshBackStateFooter: TLRefreshBackFooter {
+open class TLRefreshBackStateFooter: TLRefreshBackFooter {
 
     /// 文字距离圈圈、箭头的距离
     var labelLeftInset:CGFloat = 10
@@ -25,10 +25,10 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
         self.addSubview(stateLb)
         
         //初始化文字
-        setTitle(TLRefreshBackFooterIdleText, state: TLRefreshState.Idle)
-        setTitle(TLRefreshBackFooterPullingText, state: TLRefreshState.Pulling)
-        setTitle(TLRefreshBackFooterRefreshingText, state: TLRefreshState.Refreshing)
-        setTitle(TLRefreshBackFooterNoMoreDataText, state: TLRefreshState.NoMoreData)
+        setTitle(TLRefreshBackFooterIdleText, state: TLRefreshState.idle)
+        setTitle(TLRefreshBackFooterPullingText, state: TLRefreshState.pulling)
+        setTitle(TLRefreshBackFooterRefreshingText, state: TLRefreshState.refreshing)
+        setTitle(TLRefreshBackFooterNoMoreDataText, state: TLRefreshState.noMoreData)
         
        
     }
@@ -36,14 +36,14 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
     
 
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         self.labelLeftInset = TLRefreshLabelLeftInset
         
         let originX:CGFloat = self.width/2 - kStateLbWidth/2
         let originY:CGFloat = self.height/2 - 20/2
         
-        self.stateLb.frame = CGRectMake(originX, originY, kStateLbWidth, 20)
+        self.stateLb.frame = CGRect(x: originX, y: originY, width: kStateLbWidth, height: 20)
     }
     
     /**
@@ -52,7 +52,7 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
      - parameter title: 显示的标题
      - parameter state: 刷新状态
      */
-    func setTitle(title:String?,state:TLRefreshState) -> Void {
+    func setTitle(_ title:String?,state:TLRefreshState) -> Void {
         if (title == nil){
             return;
         }
@@ -67,12 +67,12 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
      
      - returns: 标题
      */
-    func titleForState(state:TLRefreshState) -> String {
+    func titleForState(_ state:TLRefreshState) -> String {
         return self.stateTitles[state]!;
     }
     
     
-    override func setState(refreshState: TLRefreshState) {
+    override func setState(_ refreshState: TLRefreshState) {
         let oldState = self.state;
         if (state == refreshState){
             return;
@@ -86,7 +86,7 @@ public class TLRefreshBackStateFooter: TLRefreshBackFooter {
      
      - parameter color:
      */
-    public override func setStateLbColor(color color:UIColor) -> Void {
+    open override func setStateLbColor(color:UIColor) -> Void {
         stateLb.textColor = color
     }
     

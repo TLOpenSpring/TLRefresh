@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TLRefresh'
-  s.version          = '0.1.0'
+  s.version          = '2.0.0'
   s.summary          = '针对UItableview和UICollectionView的上拉加载，下拉刷新的类库'
 
 # This description is used to generate tags and improve search results.
@@ -31,7 +31,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'TLRefresh/**/*'
-  s.resource = 'TLRefresh/TLRefresh.bundle'
   
  s.resource_bundles = {
    'TLRefresh' => ['TLRefresh/Assets/*.png']

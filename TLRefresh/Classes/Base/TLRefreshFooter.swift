@@ -10,7 +10,7 @@ import UIKit
 
 
 
-public class TLRefreshFooter: TLBaseRefresh {
+open class TLRefreshFooter: TLBaseRefresh {
     
     var isAutoHidden:Bool = false
     
@@ -18,19 +18,19 @@ public class TLRefreshFooter: TLBaseRefresh {
     
     
     /// 忽略多少scrollView的contentInset的bottom
-    public var ignoredScrollViewContentInsetBottom:CGFloat = 0
+    open var ignoredScrollViewContentInsetBottom:CGFloat = 0
 
     //MARK: - 构造方法
    public init(block: TLRefreshingHandler?) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.refreshingHandler = block
-        self.state = TLRefreshState.Idle
+        self.state = TLRefreshState.idle
     }
     
    public init(target:AnyObject,action:Selector) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.setRefreshingTarget(target, action: action)
-        self.state = TLRefreshState.Idle
+        self.state = TLRefreshState.idle
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -39,15 +39,15 @@ public class TLRefreshFooter: TLBaseRefresh {
  
     
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         
         self.height = TLRefreshFooterHeight
         self.isAutoHidden = false
     }
     
-    override public func willMoveToSuperview(newSuperview: UIView?) {
-        super.willMoveToSuperview(newSuperview)
+    override open func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
         
         if newSuperview != nil{
             if self.scrollView is UITableView || self.scrollView is UICollectionView{
@@ -58,9 +58,9 @@ public class TLRefreshFooter: TLBaseRefresh {
 //                    }
 //                }
                 if self.scrollView.tl_totalCount == 0{
-                  self.hidden = true
+                  self.isHidden = true
                 }else{
-                  self.hidden = false
+                  self.isHidden = false
                 }
             }
         }
@@ -69,11 +69,11 @@ public class TLRefreshFooter: TLBaseRefresh {
     
     //MARK: - help methods
     
-   public func endRefreshingWithNoMoreData() -> Void {
-        self.state = TLRefreshState.NoMoreData
+   open func endRefreshingWithNoMoreData() -> Void {
+        self.state = TLRefreshState.noMoreData
     }
-   public func resetNoMoreData() -> Void {
-        self.state = TLRefreshState.Idle
+   open func resetNoMoreData() -> Void {
+        self.state = TLRefreshState.idle
     }
     
 

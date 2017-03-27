@@ -8,26 +8,26 @@
 
 import UIKit
 
-public class TLRefreshHeader: TLBaseRefresh {
+open class TLRefreshHeader: TLBaseRefresh {
     
     /// 存储上一次下拉刷新时间
     var lastUpdatedTimeKey:String = "lastUpdatedTimeKey"
     /// 上一次刷新成功的时间
-    var lastUpdatedTime:NSDate?
+    var lastUpdatedTime:Date?
     /// 忽略多少scrollView的contentInset的Top
-    public var ignoredScrollViewContentInsetTop:CGFloat = 0
+    open var ignoredScrollViewContentInsetTop:CGFloat = 0
 
     //MARK: - 构造方法
     public init(block: TLRefreshingHandler?) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.refreshingHandler = block
-        setState(TLRefreshState.Idle)
+        setState(TLRefreshState.idle)
     }
     
     public init(target:AnyObject,action:Selector) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.setRefreshingTarget(target, action: action)
-        setState(TLRefreshState.Idle)
+        setState(TLRefreshState.idle)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -43,7 +43,7 @@ public class TLRefreshHeader: TLBaseRefresh {
         
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         self.y =  -self.height  - ignoredScrollViewContentInsetTop
         
@@ -51,15 +51,15 @@ public class TLRefreshHeader: TLBaseRefresh {
     
     
     //MARK: - 重写父类的方法
-    override func scrollViewContentSizeDidChange(change: [String : AnyObject]) {
+    override func scrollViewContentSizeDidChange(_ change:String?) {
         super.scrollViewContentSizeDidChange(change)
     }
     
-    override func scrollViewContentOffsetDidChange(change: [String : AnyObject]) {
+    override func scrollViewContentOffsetDidChange(_ change: String?) {
         super.scrollViewContentOffsetDidChange(change)
         
         //如果正在刷新
-        if state == TLRefreshState.Refreshing{
+        if state == TLRefreshState.refreshing{
             if self.window == nil{
                 return
             }
@@ -92,19 +92,19 @@ public class TLRefreshHeader: TLBaseRefresh {
         let normalPullingOffsetY = happenOffsetY - self.height
         let pullingPercent = (happenOffsetY - offsetY) / self.height
         
-        TLLogUtils.log?.info("state:\(self.state!);normalPullingOffsetY:\(normalPullingOffsetY)")
+//        TLLogUtils.log?.info("state:\(self.state!);normalPullingOffsetY:\(normalPullingOffsetY)")
         //如果手指正在拖动视图
-        if(self.scrollView.dragging == true){
+        if(self.scrollView.isDragging == true){
             self.pullingPercent = pullingPercent
-            if state  == TLRefreshState.Idle && offsetY < normalPullingOffsetY{
+            if state  == TLRefreshState.idle && offsetY < normalPullingOffsetY{
               //转为即将刷新的状态
-                setState(TLRefreshState.Pulling)
-            }else if state == TLRefreshState.Pulling && offsetY >= normalPullingOffsetY{
+                setState(TLRefreshState.pulling)
+            }else if state == TLRefreshState.pulling && offsetY >= normalPullingOffsetY{
                //转变为闲置状态
-                setState(TLRefreshState.Idle)
+                setState(TLRefreshState.idle)
             }
          
-        }else if(state == TLRefreshState.Pulling){ //拖拉状态 && 手松开
+        }else if(state == TLRefreshState.pulling){ //拖拉状态 && 手松开
           //开始刷新
             self.beginRefreshing()
         }else if(pullingPercent < 1){
@@ -113,25 +113,25 @@ public class TLRefreshHeader: TLBaseRefresh {
     }
     
     
-    override func setState(refreshState: TLRefreshState) {
+    override func setState(_ refreshState: TLRefreshState) {
         let oldState = self.state;
         if (state == refreshState){
             return;
         }
         super.setState(refreshState)
         
-        if state == TLRefreshState.Idle{
+        if state == TLRefreshState.idle{
             //如果不是从刷新状态变过来的，return
-            if oldState != TLRefreshState.Refreshing{
+            if oldState != TLRefreshState.refreshing{
               return
             }
             //保存刷新时间
             self.setRefreshTime()
-            UIView.animateWithDuration(TLRefreshSlowAnimationDuration, animations: {
+            UIView.animate(withDuration: TLRefreshSlowAnimationDuration, animations: {
 //                //#TODO
                 self.scrollView.tl_insetTop = self.height+10
                 
-                 self.scrollView.setContentOffset(CGPointMake(0, -self.height-10), animated: true)
+                 self.scrollView.setContentOffset(CGPoint(x: 0, y: -self.height-10), animated: true)
                 
                 if self.isAutoChangeAlpha == true{
                   self.alpha = 0
@@ -146,11 +146,11 @@ public class TLRefreshHeader: TLBaseRefresh {
                     }
             })
             
-        }else if state == TLRefreshState.Refreshing{
+        }else if state == TLRefreshState.refreshing{
          
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 
-                UIView.animateWithDuration(TLRefreshFastAnimationDuration, animations: {
+                UIView.animate(withDuration: TLRefreshFastAnimationDuration, animations: {
                     var top = self.ignoredScrollViewContentInsetTop + self.height
                     
                     //这里为了彻底显示出来刷新的View,所以高度乘以2倍
@@ -158,9 +158,9 @@ public class TLRefreshHeader: TLBaseRefresh {
                     
                     //增加滚动区域的top
                     self.scrollView.tl_insetTop = top
-                    TLLogUtils.log?.debug("===top:\(top);self.scrollView.contentInset:\(self.scrollView.contentInset);self.scrollView:\(self.scrollView)")
+                  
                     //设置滚动位置
-                    self.scrollView.setContentOffset(CGPointMake(0, -top), animated: true)
+                    self.scrollView.setContentOffset(CGPoint(x: 0, y: -top), animated: true)
                     
                     }, completion: { (finished) in
                         self.executeRefreshCallBack()
@@ -184,8 +184,8 @@ extension TLRefreshHeader{
      */
     func setRefreshTime() -> Void {
         
-        let userDafulat = NSUserDefaults.standardUserDefaults()
-        userDafulat.setObject(NSDate(), forKey: self.lastUpdatedTimeKey)
+        let userDafulat = UserDefaults.standard
+        userDafulat.set(Date(), forKey: self.lastUpdatedTimeKey)
         userDafulat.synchronize()
         
     }
@@ -195,17 +195,17 @@ extension TLRefreshHeader{
      
      - returns: 元组(时间类型 , 时间字符串)
      */
-    func getRefreshTime() -> (date:NSDate,dateStr:String)? {
-        let userDafulat = NSUserDefaults.standardUserDefaults()
+    func getRefreshTime() -> (date:Date,dateStr:String)? {
+        let userDafulat = UserDefaults.standard
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd hh:mm"
         
-        let date = userDafulat.objectForKey(lastUpdatedTimeKey)
-        if var currentDate = date {
-            if currentDate is NSDate{
-                let  dateTime = currentDate as! NSDate
-                let dateStr = dateFormatter.stringFromDate(dateTime)
+        let date = userDafulat.object(forKey: lastUpdatedTimeKey)
+        if let currentDate = date {
+            if currentDate is Date{
+                let  dateTime = currentDate as! Date
+                let dateStr = dateFormatter.string(from: dateTime)
                 
                 return (date:dateTime,dateStr:dateStr)
             }

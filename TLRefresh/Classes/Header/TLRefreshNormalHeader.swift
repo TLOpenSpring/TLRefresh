@@ -8,17 +8,17 @@
 
 import UIKit
 
-public class TLRefreshNormalHeader: TLRefreshStateHeader {
+open class TLRefreshNormalHeader: TLRefreshStateHeader {
 
     var arrowIv:UIImageView!
     var activityIndicatorView:UIActivityIndicatorView!    
-    private var arrowImg:UIImage!
+    fileprivate var arrowImg:UIImage!
     
     override func initialization() {
         super.initialization()
         
         
-        let imgBundle = NSBundle(forClass: TLRefreshNormalHeader.self)
+        let imgBundle = Bundle(for: TLRefreshNormalHeader.self)
         let infoImg = TLControlUtils.getArrowImg(imgBundle)
         arrowImg = infoImg!
         
@@ -28,27 +28,27 @@ public class TLRefreshNormalHeader: TLRefreshStateHeader {
         
         activityIndicatorView = UIActivityIndicatorView()
         activityIndicatorView.hidesWhenStopped = true
-        activityIndicatorView.activityIndicatorViewStyle = .Gray
+        activityIndicatorView.activityIndicatorViewStyle = .gray
         activityIndicatorView.stopAnimating()
         self.addSubview(activityIndicatorView)
         
-        setState(TLRefreshState.Idle)
+        setState(TLRefreshState.idle)
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         //箭头
         var arrowOriginX = self.stateLb.minX - labelLeftInset
-        let arrowOriginY = self.height/2 - arrowImg.size.height/2
-        self.arrowIv.frame = CGRectMake(arrowOriginX, arrowOriginY, arrowImg.size.width, arrowImg.size.height)
+        let arrowOriginY = self.height/2 - arrowImg.size.height/4
+        self.arrowIv.frame = CGRect(x: arrowOriginX, y: arrowOriginY, width: arrowImg.size.width/2, height: arrowImg.size.height/2)
         //转子
         self.activityIndicatorView.center = self.arrowIv.center
-        self.activityIndicatorView.size = CGSizeMake(100, 100)
+        self.activityIndicatorView.size = CGSize(width: 100, height: 100)
         self.arrowIv.tintColor = self.stateLb.textColor
 
     }
     
-    override func setState(refreshState: TLRefreshState) {
+    override func setState(_ refreshState: TLRefreshState) {
         let oldState = self.state;
         if (state == refreshState){
             return;
@@ -57,43 +57,43 @@ public class TLRefreshNormalHeader: TLRefreshStateHeader {
         //如果是闲置状态
         switch refreshState {
             
-        case TLRefreshState.Idle:
+        case TLRefreshState.idle:
             //如果是从刷新状态变过来的
-            if oldState == TLRefreshState.Refreshing{
-                self.arrowIv.transform = CGAffineTransformIdentity
+            if oldState == TLRefreshState.refreshing{
+                self.arrowIv.transform = CGAffineTransform.identity
                 
-                UIView.animateWithDuration(TLRefreshSlowAnimationDuration, animations: {
+                UIView.animate(withDuration: TLRefreshSlowAnimationDuration, animations: {
                     self.activityIndicatorView.alpha = 0
                     }, completion: { (finished) in
                         //如果执行动画时发现当前状态不是闲置状态，则直接返回
-                        if self.state != TLRefreshState.Idle{
+                        if self.state != TLRefreshState.idle{
                             return
                         }
                         
                         self.arrowIv.alpha = 1
                         self.activityIndicatorView.stopAnimating()
-                        self.arrowIv.hidden = false
+                        self.arrowIv.isHidden = false
                         
                 })
             }else{
-                self.arrowIv.hidden = false
+                self.arrowIv.isHidden = false
                 self.activityIndicatorView.stopAnimating()
                 
-                UIView.animateWithDuration(TLRefreshFastAnimationDuration, animations: {
-                    self.arrowIv.transform = CGAffineTransformIdentity
+                UIView.animate(withDuration: TLRefreshFastAnimationDuration, animations: {
+                    self.arrowIv.transform = CGAffineTransform.identity
                 })
             }
             
-        case TLRefreshState.Pulling:
-            self.arrowIv.hidden = false
+        case TLRefreshState.pulling:
+            self.arrowIv.isHidden = false
             self.activityIndicatorView.stopAnimating()
-            UIView.animateWithDuration(TLRefreshFastAnimationDuration, animations: {
+            UIView.animate(withDuration: TLRefreshFastAnimationDuration, animations: {
                //进行翻转
-                self.arrowIv.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI))
+                self.arrowIv.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI))
                 }, completion: nil)
             
-        case TLRefreshState.Refreshing:
-            self.arrowIv.hidden = true
+        case TLRefreshState.refreshing:
+            self.arrowIv.isHidden = true
             self.activityIndicatorView.startAnimating()
             self.activityIndicatorView.alpha = 1
             
@@ -110,7 +110,7 @@ public class TLRefreshNormalHeader: TLRefreshStateHeader {
      
      - parameter color:
      */
-    public override func setStateLbColor(color color: UIColor) {
+    open override func setStateLbColor(color: UIColor) {
         super.setStateLbColor(color: color)
         self.arrowIv.tintColor = color
     }

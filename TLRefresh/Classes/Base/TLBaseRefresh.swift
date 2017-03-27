@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Willow
+//import Willow
 
 /**
  刷新的几种状态
@@ -20,15 +20,15 @@ import Willow
  */
 enum TLRefreshState {
     /// 闲置状态
-    case Idle
+    case idle
     /// 拉取中...
-    case Pulling
+    case pulling
     /// 刷新中
-    case Refreshing
+    case refreshing
     /// 即将刷新的状态
-    case WillRefresh
+    case willRefresh
     /// 没有更多数据的状态
-    case NoMoreData
+    case noMoreData
     
 }
 /// 正在刷新的回调
@@ -39,7 +39,7 @@ public typealias TLRefreshBeginedCompletionHandler = (()->())?
 public typealias TLRefreshEndCompletionHander = (()->())?
 
 
-public class TLBaseRefresh: UIView {
+open class TLBaseRefresh: UIView {
     /// 记录UIScrollView刚开始的inset
     var scrollViewOriginInset:UIEdgeInsets!
     /// 所有的刷新都是基于该控件
@@ -101,16 +101,16 @@ public class TLBaseRefresh: UIView {
      系统初始化的方法
      */
     func initialization() -> Void {
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
         
         
-        TLLogUtils.log?.debug("Debug Message")
-        // Option 1
-        TLLogUtils.log?.debug("Debug Message")    // Debug Message
-        TLLogUtils.log?.info("Info Message")      // Info Message
-        TLLogUtils.log?.event("Event Message")    // Event Message
-        TLLogUtils.log?.warn("Warn Message")      // Warn Message
-        TLLogUtils.log?.error("Error Message")    // Error Message
+//        TLLogUtils.log?.debug("Debug Message")
+//        // Option 1
+//        TLLogUtils.log?.debug("Debug Message")    // Debug Message
+//        TLLogUtils.log?.info("Info Message")      // Info Message
+//        TLLogUtils.log?.event("Event Message")    // Event Message
+//        TLLogUtils.log?.warn("Warn Message")      // Warn Message
+//        TLLogUtils.log?.error("Error Message")    // Error Message
     }
     
 
@@ -118,25 +118,25 @@ public class TLBaseRefresh: UIView {
     
     
     //MARK: - 刷新状态控制
-   public func beginRefreshing() -> Void {
-        UIView.animateWithDuration(TLRefreshSlowAnimationDuration) { 
+   open func beginRefreshing() -> Void {
+        UIView.animate(withDuration: TLRefreshSlowAnimationDuration, animations: { 
             self.alpha = 1
-        }
+        }) 
     
     self.pullingPercent = 1
         
         if (self.window != nil){
-            setState(.Refreshing)
+            setState(.refreshing)
         }else{
-            if self.state != TLRefreshState.Refreshing{
-                setState(.WillRefresh)
+            if self.state != TLRefreshState.refreshing{
+                setState(.willRefresh)
                 //重新刷新
                 self.setNeedsDisplay()
             }
         }
         
     }
-   public func begingRefreshing(completionHandler:TLRefreshingHandler?) -> Void {
+   open func begingRefreshing(_ completionHandler:TLRefreshingHandler?) -> Void {
         self.refreshingHandler = completionHandler
         beginRefreshing()
     }
@@ -145,14 +145,14 @@ public class TLBaseRefresh: UIView {
     /**
      结束刷新状态
      */
-   public func endRefreshing() -> Void
+   open func endRefreshing() -> Void
     {
         weak var weakSelf = self
-        dispatch_async(dispatch_get_main_queue()) {
-            weakSelf!.setState(.Idle)
+        DispatchQueue.main.async {
+            weakSelf!.setState(.idle)
         }
     }
-    func endRereshing(completionHandler:(()->())?) -> Void {
+    func endRereshing(_ completionHandler:(()->())?) -> Void {
         self.refreshEndHandler = completionHandler
         endRefreshing()
     }
@@ -162,24 +162,24 @@ public class TLBaseRefresh: UIView {
      
      - returns:
      */
-   public func isRefreshing() -> Bool {
-        return self.state == TLRefreshState.Refreshing || self.state == TLRefreshState.WillRefresh
+   open func isRefreshing() -> Bool {
+        return self.state == TLRefreshState.refreshing || self.state == TLRefreshState.willRefresh
     }
     
     //MARK: - UIScrollView
-    func scrollViewContentOffsetDidChange(change:[String:AnyObject]) -> Void { }
+    func scrollViewContentOffsetDidChange(_ change:String?) -> Void { }
     /**
      当scrollView的contentSize发生改变的时候调用
      
      - parameter change:
      */
-    func scrollViewContentSizeDidChange(change:[String:AnyObject]) -> Void { }
+    func scrollViewContentSizeDidChange(_ change:String?) -> Void { }
     /**
      当ScrollView发生拖拽状态的时候调用
      
      - parameter change:
      */
-    func scrollViewPanStateDidChange(change:[String:AnyObject]) -> Void {  }
+    func scrollViewPanStateDidChange(_ change:String?) -> Void {  }
     
     /**
      Tells the view that its superview is about to change to the specified superview.
@@ -187,8 +187,8 @@ public class TLBaseRefresh: UIView {
      
      - parameter newSuperview:
      */
-    override public func willMoveToSuperview(newSuperview: UIView?) {
-        super.willMoveToSuperview(newSuperview)
+    override open func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
         
         if let superView = newSuperview as? UIScrollView{
          //先移除监听
@@ -212,7 +212,7 @@ public class TLBaseRefresh: UIView {
     
     //MARK: - 设置回调对象和回调方法
     
-    func setRefreshingTarget(target:AnyObject,action:Selector) -> Void {
+    func setRefreshingTarget(_ target:AnyObject,action:Selector) -> Void {
         self.refreshTarget = target
         self.refreshAction = action
     }
@@ -221,7 +221,7 @@ public class TLBaseRefresh: UIView {
     
     //MARK: - 监听
     func addObservers() -> Void {
-        let options = NSKeyValueObservingOptions.Old
+        let options = NSKeyValueObservingOptions.old
         self.scrollView?.addObserver(self, forKeyPath: TLRefreshKeyPathContentOffset, options: options, context: nil)
         self.scrollView?.addObserver(self, forKeyPath: TLRefreshKeyPathContentSize, options: options, context: nil)
         
@@ -237,32 +237,57 @@ public class TLBaseRefresh: UIView {
         pan = nil
     }
     
-    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+   
+  
+    
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         //如果不支持交互，直接返回
-        if self.userInteractionEnabled == false{
+        if self.isUserInteractionEnabled == false{
             return
         }
+        
+        if let changeKindValue = change?[.kindKey] as? UInt, let changeType = NSKeyValueChange(rawValue: changeKindValue) {
+            switch changeType {
+            case .setting:
+                print("Setting")
+                break
+            case .insertion:
+                print("Insertion")
+                break
+            case .removal:
+                print("Removal")
+                break
+            case .replacement:
+                print("Replacement")
+                break
+            }
+        }
+    
+        
+        
         
         
         if keyPath == TLRefreshKeyPathContentSize{
-            self.scrollViewContentSizeDidChange(change!)
+//            self.scrollViewContentSizeDidChange(change as! [String : AnyObject])
+            self.scrollViewContentOffsetDidChange(nil)
         }
         
-        if self.hidden{
+        if self.isHidden{
             return
         }
         if keyPath == TLRefreshKeyPathContentOffset{
-            self.scrollViewContentOffsetDidChange(change!)
+            self.scrollViewContentOffsetDidChange(nil)
         }else if(keyPath == TLRefreshKeyPathPanState){
-            self.scrollViewPanStateDidChange(change!)
+            self.scrollViewPanStateDidChange(nil)
         }
-        
+    
     }
     
     
     //MARK: - 执行回调函数
     func executeRefreshCallBack() -> Void {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
+            
             if let handler = self.refreshingHandler{
                 handler!()
             }
@@ -283,20 +308,19 @@ public class TLBaseRefresh: UIView {
      
      - parameter refreshState: 刷新状态
      */
-    func setState(refreshState:TLRefreshState) -> Void {
-        self.state = refreshState
+    func setState(_ refreshState:TLRefreshState) -> Void {
+        state = refreshState
         
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
            self.setNeedsLayout()
         }
         
-      
     }
     
-    public override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
-        if state == TLRefreshState.WillRefresh{
-           state = TLRefreshState.Refreshing
+    open override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        if state == TLRefreshState.willRefresh{
+           state = TLRefreshState.refreshing
         }
     }
     
@@ -305,9 +329,9 @@ public class TLBaseRefresh: UIView {
      
      - parameter color: 颜色
      */
-    public func setStateLbColor(color color:UIColor) -> Void{}
+    public func setStateLbColor(color:UIColor) -> Void{}
     
-    
+
 }
 
 

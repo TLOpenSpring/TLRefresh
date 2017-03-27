@@ -23,14 +23,14 @@ extension UIScrollView{
             if self is UITableView{
                 let table = self as! UITableView
                 for item in 0..<table.numberOfSections {
-                    count += table.numberOfRowsInSection(item)
+                    count += table.numberOfRows(inSection: item)
                 }
             }
             
             if self is UICollectionView{
                 let collectionView = self as! UICollectionView
-                for item in 0..<collectionView.numberOfSections() {
-                    count += collectionView.numberOfItemsInSection(item)
+                for item in 0..<collectionView.numberOfSections {
+                    count += collectionView.numberOfItems(inSection: item)
                 }
             }
             
@@ -44,16 +44,16 @@ extension UIScrollView{
             return (objc_getAssociatedObject(self, &TLRefereshHeadKey) as? TLRefreshHeader)
         }
         set{
-            var temp = newValue
+            let temp = newValue
             
             if(temp == nil){
                 return
             }
             
-            self.insertSubview(temp!, atIndex: 0)
-            self.willChangeValueForKey("tl_header") //KVO
+            self.insertSubview(temp!, at: 0)
+            self.willChangeValue(forKey: "tl_header") //KVO
             objc_setAssociatedObject(self, &TLRefereshHeadKey, temp, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            self.didChangeValueForKey("tl_header")
+            self.didChangeValue(forKey: "tl_header")
         }
     }
     
@@ -62,16 +62,16 @@ extension UIScrollView{
          return objc_getAssociatedObject(self, &TLRefereshFooterKey) as? TLRefreshFooter
         }
         set{
-            var temp = newValue
+            let temp = newValue
         
             if(temp == nil){
                 return
             }
             
-            self.insertSubview(newValue!, atIndex: 0)
-            self.willChangeValueForKey("tl_footer")
+            self.insertSubview(newValue!, at: 0)
+            self.willChangeValue(forKey: "tl_footer")
             objc_setAssociatedObject(self, &TLRefereshFooterKey, temp, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            self.didChangeValueForKey("tl_footer")
+            self.didChangeValue(forKey: "tl_footer")
         }
     }
     
@@ -83,7 +83,7 @@ extension UIScrollView{
 
     public var tl_reloadDataBlock:((Int)->())?{
         
-        var temp = tl_reloadDataBlock
+        let temp = tl_reloadDataBlock
         if(temp != nil){
             temp!(tl_totalCount)
         }

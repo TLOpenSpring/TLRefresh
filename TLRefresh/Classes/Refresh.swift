@@ -8,8 +8,8 @@
 
 import UIKit
 
-let tl_screen_width = UIScreen.mainScreen().bounds.width
-let tl_screen_height = UIScreen.mainScreen().bounds.height
+let tl_screen_width = UIScreen.main.bounds.width
+let tl_screen_height = UIScreen.main.bounds.height
 
 let TLRefreshLabelLeftInset:CGFloat = 25;
 let TLRefreshHeaderHeight:CGFloat = 54.0;
@@ -43,11 +43,10 @@ let TLRefreshHeaderNoneLastDateText = "无记录";
 //MARK: - 定义一些控件的尺寸
 let kStateLbWidth:CGFloat = 180
 
-public class Refresh: NSObject {
-  public static func performBlock(delay:NSTimeInterval,completionHander:()->()) -> Void {
-        let popTime = dispatch_time(DISPATCH_TIME_NOW,
-                                    Int64(delay * Double(NSEC_PER_SEC))) // 1
-        dispatch_after(popTime, dispatch_get_main_queue(), completionHander);
+open class Refresh: NSObject {
+  open static func performBlock(_ delay:TimeInterval,completionHander:@escaping ()->()) -> Void {
+        let popTime = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC) // 1
+        DispatchQueue.main.asyncAfter(deadline: popTime, execute: completionHander);
     }
     
     
@@ -116,19 +115,19 @@ extension UIView{
     }
     
     var maxX:CGFloat{
-      return CGRectGetMaxX(self.frame)
+      return self.frame.maxX
     }
     
     var minX:CGFloat{
-      return CGRectGetMinX(self.frame)
+      return self.frame.minX
     }
     
     var maxY:CGFloat{
-      return CGRectGetMaxY(self.frame)
+      return self.frame.maxY
     }
     
     var minY:CGFloat{
-     return CGRectGetMinY(self.frame)
+     return self.frame.minY
     }
     
     

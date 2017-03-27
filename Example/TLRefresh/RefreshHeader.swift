@@ -15,10 +15,10 @@ class RefreshHeader: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let rect = CGRectMake(10, 5, 100, 20)
+        let rect = CGRect(x: 10, y: 5, width: 100, height: 20)
         titlelb = UILabel(frame: rect)
-        titlelb.textColor = UIColor.redColor()
-        titlelb.font = UIFont.boldSystemFontOfSize(18)
+        titlelb.textColor = UIColor.red
+        titlelb.font = UIFont.boldSystemFont(ofSize: 18)
         self.addSubview(titlelb)
     }
     
@@ -33,7 +33,7 @@ class RefreshHeader: UIView {
         let originX:CGFloat = self.frame.width/2 - 100/2
         let originY:CGFloat = self.frame.height/2 - 20/2
         
-        titlelb.frame = CGRectMake(originX, originY, 100, 20)
+        titlelb.frame = CGRect(x: originX, y: originY, width: 100, height: 20)
     }
     /*
     // Only override drawRect: if you perform custom drawing.

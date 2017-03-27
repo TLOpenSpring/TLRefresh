@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class TLRefreshStateHeader: TLRefreshHeader {
+open class TLRefreshStateHeader: TLRefreshHeader {
 
     /// 显示上次更新时间的label
     var lastUpdateTimeLb:UILabel!
@@ -24,39 +24,39 @@ public class TLRefreshStateHeader: TLRefreshHeader {
         super.initialization()
         
         stateLb = TLControlUtils.createStateLabel()
-        stateLb.textAlignment = .Center
+        stateLb.textAlignment = .center
         self.addSubview(stateLb)
         
         lastUpdateTimeLb = TLControlUtils.createStateLabel()
         lastUpdateTimeLb.text = "最后更新:"
         lastUpdateTimeLb.textColor = stateLb.textColor
-        lastUpdateTimeLb.textAlignment = .Center
+        lastUpdateTimeLb.textAlignment = .center
         self.addSubview(lastUpdateTimeLb)
         
-        self.setTitle(TLRefreshHeaderIdleText, state: TLRefreshState.Idle)
-        self.setTitle(TLRefreshHeaderPullingText, state: TLRefreshState.Pulling)
-        self.setTitle(TLRefreshHeaderRefreshingText, state: TLRefreshState.Refreshing)
+        self.setTitle(TLRefreshHeaderIdleText, state: TLRefreshState.idle)
+        self.setTitle(TLRefreshHeaderPullingText, state: TLRefreshState.pulling)
+        self.setTitle(TLRefreshHeaderRefreshingText, state: TLRefreshState.refreshing)
         
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         
-        if self.stateLb.hidden == true{
+        if self.stateLb.isHidden == true{
          return
         }
         
-        if self.lastUpdateTimeLb.hidden == true{
+        if self.lastUpdateTimeLb.isHidden == true{
            self.stateLb.frame = self.bounds
         }else{
             let originX:CGFloat = self.width/2 - kStateLbWidth/2
             let originY:CGFloat = 10
-            var rect = CGRectMake(originX,originY, kStateLbWidth, 20)
+            var rect = CGRect(x: originX,y: originY, width: kStateLbWidth, height: 20)
             stateLb.frame = rect
             
             
             //设置时间标签的坐标
-            rect = CGRectMake(stateLb.x, CGRectGetMaxY(stateLb.frame)+5, stateLb.width, 20)
+            rect = CGRect(x: stateLb.x, y: stateLb.frame.maxY+5, width: stateLb.width, height: 20)
             lastUpdateTimeLb.frame = rect
          
 
@@ -69,7 +69,7 @@ public class TLRefreshStateHeader: TLRefreshHeader {
      - parameter title: 显示的标题
      - parameter state: 刷新状态
      */
-    func setTitle(title:String?,state:TLRefreshState) -> Void {
+    func setTitle(_ title:String?,state:TLRefreshState) -> Void {
         if (title == nil){
             return;
         }
@@ -77,7 +77,7 @@ public class TLRefreshStateHeader: TLRefreshHeader {
         self.stateLb.text = self.stateTitles[state];
     }
     
-    override func setState(refreshState: TLRefreshState) {
+    override func setState(_ refreshState: TLRefreshState) {
         let oldState = self.state;
         if (state == refreshState){
             return;
@@ -93,7 +93,7 @@ public class TLRefreshStateHeader: TLRefreshHeader {
         }
     }
     
-    public override func setStateLbColor(color color: UIColor) {
+    open override func setStateLbColor(color: UIColor) {
         super.setStateLbColor(color: color)
         
         self.stateLb.textColor = color

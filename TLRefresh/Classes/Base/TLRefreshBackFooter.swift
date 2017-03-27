@@ -10,7 +10,7 @@ import UIKit
 
 
 
-public class TLRefreshBackFooter: TLRefreshFooter {
+open class TLRefreshBackFooter: TLRefreshFooter {
 
     var lastRefreshCount:Int = 0
     var lastBottomData:CGFloat = 0
@@ -21,7 +21,7 @@ public class TLRefreshBackFooter: TLRefreshFooter {
     
     //MARK: - 父类方法
     
-    override func scrollViewContentSizeDidChange(change: [String : AnyObject]) {
+    override func scrollViewContentSizeDidChange(_ change: String?) {
         super.scrollViewContentSizeDidChange(change)
         
         //内容的高度
@@ -33,17 +33,17 @@ public class TLRefreshBackFooter: TLRefreshFooter {
         self.y = max(contentHeight, scollheight)
     }
     
-    override func scrollViewPanStateDidChange(change: [String : AnyObject]) {
-        super.scrollViewPanStateDidChange(change)
+    override func scrollViewPanStateDidChange(_ change:String?) {
+        super.scrollViewPanStateDidChange(nil)
     }
     
 
     
-    override func scrollViewContentOffsetDidChange(change: [String : AnyObject]) {
+    override func scrollViewContentOffsetDidChange(_ change: String?) {
         super.scrollViewContentOffsetDidChange(change)
         
         //如果正在刷新
-        if state == TLRefreshState.Refreshing{
+        if state == TLRefreshState.refreshing{
          return
         }
         
@@ -63,27 +63,23 @@ public class TLRefreshBackFooter: TLRefreshFooter {
         
         //获取百分比
         let pullingPercent = (currentOffsetY - happenOffsety)/self.height
-        if state == TLRefreshState.NoMoreData{
+        if state == TLRefreshState.noMoreData{
             self.pullingPercent = pullingPercent
             return
         }
         
-        if self.scrollView.dragging == true{
+        if self.scrollView.isDragging == true{
             self.pullingPercent = pullingPercent
             //普通和即将刷新的临界点
             let normalPullingOffsetY = happenOffsety + self.height
             
-            
-            
-            TLLogUtils.log?.debug("==self.state:\(self.state!);currentOffsetY:\(currentOffsetY);normalPullingOffsetY:\(normalPullingOffsetY)")
-            
-            if state == TLRefreshState.Idle && currentOffsetY > normalPullingOffsetY{
+            if state == TLRefreshState.idle && currentOffsetY > normalPullingOffsetY{
                 
                 //转为即将刷新状态
-                setState(TLRefreshState.Pulling)
-            }else if state == TLRefreshState.Pulling && currentOffsetY <= normalPullingOffsetY {
+                setState(TLRefreshState.pulling)
+            }else if state == TLRefreshState.pulling && currentOffsetY <= normalPullingOffsetY {
                 //转为普通状态
-                setState(.Idle)
+                setState(.idle)
             }
 //            else if(self.state == TLRefreshState.Pulling){//即将刷新 && 手松开
 //                //开始刷新
@@ -93,7 +89,7 @@ public class TLRefreshBackFooter: TLRefreshFooter {
                 self.pullingPercent = pullingPercent
             }
         }else{
-             if(self.state == TLRefreshState.Pulling){//即将刷新 && 手松开
+             if(self.state == TLRefreshState.pulling){//即将刷新 && 手松开
                 //开始刷新
                 self.beginRefreshing()
             }
@@ -101,19 +97,19 @@ public class TLRefreshBackFooter: TLRefreshFooter {
     }
     
     
-    override func setState(refreshState: TLRefreshState) {
+    override func setState(_ refreshState: TLRefreshState) {
         let oldState = self.state;
         if (state == refreshState){
             return;
         }
         super.setState(refreshState)
         
-        if state == TLRefreshState.NoMoreData || state == TLRefreshState.Idle{
+        if state == TLRefreshState.noMoreData || state == TLRefreshState.idle{
             
             //如果是从刚刷新的状态变为闲置状态
-            if oldState  == TLRefreshState.Refreshing{
+            if oldState  == TLRefreshState.refreshing{
                 
-             UIView.animateWithDuration(TLRefreshSlowAnimationDuration, animations: {
+             UIView.animate(withDuration: TLRefreshSlowAnimationDuration, animations: {
                 
                 self.scrollView.tl_insetBottom -= self.lastBottomData
                 //自动调整透明度
@@ -131,14 +127,14 @@ public class TLRefreshBackFooter: TLRefreshFooter {
             //获取ScrollView的内容超出View的高度
             let beyondHeight = self.heightForContentBreakView()
             
-            if oldState == TLRefreshState.Refreshing && beyondHeight>0 && scrollView?.tl_totalCount != lastRefreshCount{
+            if oldState == TLRefreshState.refreshing && beyondHeight>0 && scrollView?.tl_totalCount != lastRefreshCount{
                 self.scrollView.tl_offsetY = self.scrollView.tl_offsetY
             }
-        }else if state == TLRefreshState.Refreshing{//正在刷新
+        }else if state == TLRefreshState.refreshing{//正在刷新
          //记录刷新前的数量
             self.lastRefreshCount = (self.scrollView?.tl_totalCount)!
             
-            UIView.animateWithDuration(TLRefreshFastAnimationDuration, animations: {
+            UIView.animate(withDuration: TLRefreshFastAnimationDuration, animations: {
                 
                 var bottom = self.height + self.scrollViewOriginInset.bottom
                 let h = self.heightForContentBreakView()
