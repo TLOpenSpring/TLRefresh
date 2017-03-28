@@ -31,9 +31,7 @@ class TLControlUtils: NSObject {
 //        let infoImg1 = UIImage(contentsOfFile: (myBundle!.path(forResource: "arrow", ofType: "png"))!)
     
     
-    let img = UIImage(named: "arrow")
-    
-    print("img:\(img)")
+
     
     
     

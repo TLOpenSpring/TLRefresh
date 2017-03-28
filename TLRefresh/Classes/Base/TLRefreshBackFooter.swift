@@ -81,10 +81,10 @@ open class TLRefreshBackFooter: TLRefreshFooter {
                 //转为普通状态
                 setState(.idle)
             }
-//            else if(self.state == TLRefreshState.Pulling){//即将刷新 && 手松开
-//                //开始刷新
-//                self.beginRefreshing()
-//            }
+            else if(self.state == TLRefreshState.pulling){//即将刷新 && 手松开
+                //开始刷新
+                self.beginRefreshing()
+            }
             else if(pullingPercent < 1){
                 self.pullingPercent = pullingPercent
             }

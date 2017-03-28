@@ -22,8 +22,8 @@ class NormalController: UIViewController,UITableViewDelegate,UITableViewDataSour
 
         // Do any additional setup after loading the view.
         
-        initView()
         initData()
+        initView()
     }
     
     func initView() -> Void {
@@ -34,16 +34,31 @@ class NormalController: UIViewController,UITableViewDelegate,UITableViewDataSour
         tableView.dataSource = self
         self.view.addSubview(tableView)
         
-        tableView.tl_header = TLRefreshHeader(block: { 
-            self.arrayData.removeAll()
-            self.initData()
-            self.tableView.reloadData()
+        tableView.backgroundColor = UIColor.orange
+        
+        tableView.tl_header = TLRefreshNormalHeader(block: {
+            
+            Refresh.performBlock(1, completionHander: {
+                self.arrayData.removeAll()
+                self.initData()
+                self.tableView.reloadData()
+                self.tableView.tl_header?.endRefreshing()
+            })
+            
         })
         
         
-        tableView.tl_footer = TLRefreshNormalFooter(block: { 
-            self.initData()
-            self.tableView.reloadData()
+        tableView.tl_footer = TLRefreshNormalFooter(block: {
+            
+            Refresh.performBlock(2, completionHander: {
+                self.requestData()
+//                self.tableView.reloadData()
+                
+                self.tableView.tl_footer?.endRefreshing()
+            })
+            
+            
+           
         })
         
         
@@ -51,6 +66,19 @@ class NormalController: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     func initData() -> Void {
       
+        for item in 1...30 {
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+            
+            
+            let date = Date()
+            let dateStr = formatter.string(from: date)
+            arrayData.append(dateStr)
+        }
+    }
+    
+    func requestData() -> Void {
         for item in 1...10 {
             
             let formatter = DateFormatter()

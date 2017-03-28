@@ -19,6 +19,7 @@ open class TLRefreshNormalFooter: TLRefreshBackStateFooter {
     override func initialization() {
         super.initialization()
        
+        self.backgroundColor = UIColor.red
         
         let imgBundle = Bundle(for: TLRefreshNormalFooter.self)
         let infoImg = TLControlUtils.getArrowImg(imgBundle)
@@ -34,6 +35,10 @@ open class TLRefreshNormalFooter: TLRefreshBackStateFooter {
         activityIndicatorView.stopAnimating()
         self.addSubview(activityIndicatorView)
         setState(TLRefreshState.idle)
+        
+        debugPrint("footer:\(self)")
+        
+        
     }
 
 
@@ -45,14 +50,18 @@ open class TLRefreshNormalFooter: TLRefreshBackStateFooter {
         
         //箭头
         var arrowOriginX = self.stateLb.minX - labelLeftInset
-        let arrowOriginY = self.height/2 - arrowImg.size.height/2
-        self.arrowIv.frame = CGRect(x: arrowOriginX, y: arrowOriginY, width: arrowImg.size.width, height: arrowImg.size.height)
+        let arrowOriginY = self.height/2 - arrowImg.size.height/4
+        self.arrowIv.frame = CGRect(x: arrowOriginX, y: arrowOriginY, width: arrowImg.size.width/2, height: arrowImg.size.height/2)
         //转子
         self.activityIndicatorView.center = self.arrowIv.center
         self.activityIndicatorView.size = CGSize(width: 100, height: 100)
         self.arrowIv.tintColor = self.stateLb.textColor
         
+        debugPrint("layoutSubviews footer:\(self)")
+        
     }
+    
+
     
     /**
      继承父类设置的状态

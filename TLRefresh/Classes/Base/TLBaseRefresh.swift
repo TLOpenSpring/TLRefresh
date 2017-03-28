@@ -101,7 +101,7 @@ open class TLBaseRefresh: UIView {
      系统初始化的方法
      */
     func initialization() -> Void {
-        self.backgroundColor = UIColor.clear
+//        self.backgroundColor = UIColor.red
         
         
 //        TLLogUtils.log?.debug("Debug Message")
@@ -246,34 +246,33 @@ open class TLBaseRefresh: UIView {
             return
         }
         
-        if let changeKindValue = change?[.kindKey] as? UInt, let changeType = NSKeyValueChange(rawValue: changeKindValue) {
-            switch changeType {
-            case .setting:
-                print("Setting")
-                break
-            case .insertion:
-                print("Insertion")
-                break
-            case .removal:
-                print("Removal")
-                break
-            case .replacement:
-                print("Replacement")
-                break
-            }
-        }
+//        if let changeKindValue = change?[.kindKey] as? UInt, let changeType = NSKeyValueChange(rawValue: changeKindValue) {
+//            switch changeType {
+//            case .setting:
+//                print("Setting")
+//                break
+//            case .insertion:
+//                print("Insertion")
+//                break
+//            case .removal:
+//                print("Removal")
+//                break
+//            case .replacement:
+//                print("Replacement")
+//                break
+//            }
+//        }
     
         
         
         
         
         if keyPath == TLRefreshKeyPathContentSize{
-//            self.scrollViewContentSizeDidChange(change as! [String : AnyObject])
-            self.scrollViewContentOffsetDidChange(nil)
+            self.scrollViewContentSizeDidChange(nil)
         }
         
         if self.isHidden{
-            return
+//            return
         }
         if keyPath == TLRefreshKeyPathContentOffset{
             self.scrollViewContentOffsetDidChange(nil)

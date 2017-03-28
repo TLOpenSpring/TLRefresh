@@ -33,6 +33,8 @@ open class TLRefreshFooter: TLBaseRefresh {
         self.state = TLRefreshState.idle
     }
     
+  
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -57,6 +59,7 @@ open class TLRefreshFooter: TLBaseRefresh {
 //                        self.hidden = totalCount == 0
 //                    }
 //                }
+                
                 if self.scrollView.tl_totalCount == 0{
                   self.isHidden = true
                 }else{
